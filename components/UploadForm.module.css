@@ -1,0 +1,160 @@
+/* components/UploadForm.module.css */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  font-family: 'Syne', sans-serif;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(196, 181, 253, 0.55);
+}
+
+.input {
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input::placeholder { color: rgba(255, 255, 255, 0.18); }
+
+.input:focus {
+  border-color: rgba(139, 92, 246, 0.65);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.row .field { flex: 1; }
+
+/* Image drop zone */
+.dropZone {
+  border: 1.5px dashed rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(139, 92, 246, 0.03);
+  position: relative;
+}
+
+.dropZone:hover,
+.dropZone.dragging {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.dropZone input[type='file'] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.dropIcon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.dropText {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(196, 181, 253, 0.45);
+  line-height: 1.5;
+}
+
+.dropText span {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+/* Submit */
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.9rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 25px rgba(124, 58, 237, 0.3);
+  margin-top: 0.25rem;
+}
+
+.submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.5);
+}
+
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  color: #fca5a5;
+  font-size: 0.78rem;
+}

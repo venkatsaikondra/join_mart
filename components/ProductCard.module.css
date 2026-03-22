@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@400;500;600;700&display=swap');
+
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: 18px;
+  overflow: hidden;
+  font-family: 'Syne', sans-serif;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: cardIn 0.4s ease both;
+  position: relative;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(109, 40, 217, 0.1);
+}
+
+/* Status-specific border glow */
+.card.held {
+  border-color: rgba(250, 204, 21, 0.3);
+}
+
+.card.held:hover {
+  border-color: rgba(250, 204, 21, 0.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(250, 204, 21, 0.08);
+}
+
+.card.sold {
+  border-color: rgba(248, 113, 113, 0.2);
+  opacity: 0.7;
+}
+
+/* Image */
+.imageWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: rgba(139, 92, 246, 0.06);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .image { transform: scale(1.04); }
+
+.imageFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 92, 246, 0.05));
+  color: rgba(167, 139, 250, 0.4);
+}
+
+/* Status badge */
+.badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  font-family: 'Syne', sans-serif;
+}
+
+.badge.available {
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #86efac;
+}
+
+.badge.held {
+  background: rgba(250, 204, 21, 0.15);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  color: #fde047;
+}
+
+.badge.sold {
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #fca5a5;
+}
+
+.badgeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.badge.available .badgeDot { background: #4ade80; box-shadow: 0 0 5px #4ade80; }
+.badge.held .badgeDot { background: #facc15; box-shadow: 0 0 5px #facc15; animation: blink 1.5s ease-in-out infinite; }
+.badge.sold .badgeDot { background: #f87171; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* Body */
+.body {
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.3rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0 1rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #a78bfa;
+  line-height: 1;
+}
+
+.heldBy {
+  font-size: 0.7rem;
+  color: rgba(253, 224, 71, 0.6);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btnHold {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 9px;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.btnHold:hover {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(139, 92, 246, 0.6);
+  transform: translateY(-1px);
+}
+
+.btnHold:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnSell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 9px;
+  border: none;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+}
+
+.btnSell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
+}
+
+.btnSell:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.soldOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 0, 15, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.soldStamp {
+  border: 2px solid rgba(248, 113, 113, 0.5);
+  color: rgba(248, 113, 113, 0.7);
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 0.4rem 1.2rem;
+  border-radius: 6px;
+  transform: rotate(-12deg);
+}
