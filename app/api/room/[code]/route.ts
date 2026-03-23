@@ -4,9 +4,10 @@ import { db } from '@/lib/db';
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { code: string } }
+  { params }: { params: Promise<{ code: string }> }
 ) {
-  const room = await db.rooms.findByCode(params.code);
+  const { code } = await params;
+  const room = await db.rooms.findByCode(code);
   if (!room) return NextResponse.json({ error: 'Room not found' }, { status: 404 });
 
   const products = await db.products.findByRoom(room.id);

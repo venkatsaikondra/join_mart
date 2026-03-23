@@ -4,7 +4,7 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price?: number;
   imageUrl: string;
   status: 'available' | 'held' | 'sold';
   heldBy?: string;
@@ -57,7 +57,7 @@ export default function ProductCard({ product, isVendor, onHold, onSell }: Props
 
         <div className={styles.footer}>
           <div>
-            <span className={styles.price}>₹{price.toLocaleString('en-IN')}</span>
+            <span className={styles.price}>₹{price ? price.toLocaleString('en-IN') : 'N/A'}</span>
             {status === 'held' && heldBy && (
               <p className={styles.heldBy}>Held by {heldBy}</p>
             )}

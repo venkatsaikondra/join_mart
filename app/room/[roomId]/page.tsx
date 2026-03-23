@@ -24,14 +24,18 @@ export default function RoomPage() {
   const isVendor = true; // derive from session/store in real app
 
   const [form, setForm] = useState({
-    name: '', description: '', price: '', currency: '₹', imageUrl: '',
+    name: '', description: '', price: '', currency: '₹',
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     // fetch room + products from API
     fetch(`/api/room/${roomId}`)
-      .then(r => r.json())
-      .then(d => { setRoomName(d.name); setProducts(d.products); })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => { 
+        setRoomName(d.name); 
+        setProducts(d.products); 
+      })
       .catch(() => {});
   }, [roomId]);
 
@@ -43,15 +47,24 @@ export default function RoomPage() {
 
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
+    let imageUrl = '';
+    if (imageFile) {
+      imageUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsDataURL(imageFile);
+      });
+    }
     const res = await fetch('/api/product/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ roomId, ...form, price: Number(form.price) }),
+      body: JSON.stringify({ roomId, ...form, price: Number(form.price), imageUrl }),
     });
     const newProduct = await res.json();
     setProducts(prev => [newProduct, ...prev]);
     setShowModal(false);
-    setForm({ name: '', description: '', price: '', currency: '₹', imageUrl: '' });
+    setForm({ name: '', description: '', price: '', currency: '₹' });
+    setImageFile(null);
   };
 
   const handleHold = async (productId: string) => {
@@ -211,13 +224,12 @@ export default function RoomPage() {
               </div>
 
               <div className={styles.field}>
-                <label className={styles.label}>Image URL</label>
+                <label className={styles.label}>Product Image</label>
                 <input
                   className={styles.input}
-                  type="url"
-                  placeholder="https://…"
-                  value={form.imageUrl}
-                  onChange={e => setForm({ ...form, imageUrl: e.target.value })}
+                  type="file"
+                  accept="image/*"
+                  onChange={e => setImageFile(e.target.files?.[0] || null)}
                 />
               </div>
 
