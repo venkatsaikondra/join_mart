@@ -1,0 +1,724 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── NAVBAR (shared) ─────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 4rem;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(7, 0, 14, 0.88);
+  backdrop-filter: blur(16px);
+  font-family: 'Syne', sans-serif;
+}
+
+.navLogo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.12em;
+  color: #a78bfa;
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navBtn {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.2rem;
+  border-radius: 6px;
+  border: 1.5px solid #b8ff5b;
+  color: #07000e;
+  background: #b8ff5b;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.navBtn:hover {
+  background: transparent;
+  color: #b8ff5b;
+}
+
+.navBtnGhost {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.2rem;
+  border-radius: 6px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.navBtnGhost:hover {
+  border-color: #b8ff5b;
+  color: #b8ff5b;
+}
+
+.navBtnActive {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.2rem;
+  border-radius: 6px;
+  border: 1.5px solid #a78bfa;
+  color: #a78bfa;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
+  background: rgba(124, 58, 237, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.navAvatar:hover { border-color: #a78bfa; }
+
+/* ── ABOUT HERO ──────────────────────────────────────────── */
+.aboutHero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4rem;
+  padding: 6rem 4rem 4rem;
+  position: relative;
+  overflow: hidden;
+  background: #07000e;
+}
+
+.heroGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+.heroOrb {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 65%);
+  top: -150px;
+  right: -100px;
+  pointer-events: none;
+}
+
+.heroLeft {
+  position: relative;
+  z-index: 1;
+}
+
+.sectionLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #b8ff5b;
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+
+.aboutTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  line-height: 0.92;
+  color: #ffffff;
+  margin-bottom: 1.8rem;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.aboutTitleEm {
+  color: #a78bfa;
+}
+
+.aboutBody {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 480px;
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+
+.aboutBody2 {
+  animation-delay: 0.4s;
+}
+
+.heroRight {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artCard {
+  width: 300px;
+  aspect-ratio: 3/4;
+  background: rgba(124, 58, 237, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), transparent 60%);
+}
+
+.artCardLottie {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  z-index: 1;
+}
+
+.artLabel {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 2;
+}
+
+.artLabelTag {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #b8ff5b;
+  margin-bottom: 0.3rem;
+}
+
+.artLabelText {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+
+/* ── MISSION SECTION (Foodzilla-style split) ─────────────── */
+.missionSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  border-top: 1px solid rgba(139, 92, 246, 0.12);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+  background: rgba(124, 58, 237, 0.03);
+}
+
+.missionLeft {
+  padding: 5rem 4rem;
+  border-right: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.missionImageWrap {
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.missionImageWrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), transparent);
+}
+
+.missionLottie {
+  width: 160px;
+  height: 160px;
+  position: relative;
+  z-index: 1;
+}
+
+.missionTag {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b8ff5b;
+  margin-bottom: 1rem;
+}
+
+.missionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: #ffffff;
+  line-height: 0.95;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.missionBody {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.missionRight {
+  padding: 5rem 4rem;
+}
+
+.missionFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+}
+
+.missionFeature {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.missionFeature.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mfNum {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: #b8ff5b;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  min-width: 2.5rem;
+}
+
+.mfTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+
+.mfDesc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.missionDecor {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.missionDecorLottie {
+  width: 120px;
+  height: 120px;
+}
+
+/* ── VALUES SECTION ──────────────────────────────────────── */
+.valuesSection {
+  padding: 7rem 4rem;
+  background: #07000e;
+}
+
+.valuesSectionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.95;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.valuesSectionTitleEm {
+  color: #a78bfa;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.valueCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  border-radius: 18px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.valueCard.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.valueCard:hover {
+  border-color: rgba(139, 92, 246, 0.45);
+  background: rgba(124, 58, 237, 0.06);
+  transform: translateY(-4px);
+}
+
+.valueCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.valueCard:nth-child(1)::before { background: #b8ff5b; }
+.valueCard:nth-child(2)::before { background: #a78bfa; }
+.valueCard:nth-child(3)::before { background: #60a5fa; }
+
+.valueCard:hover::before { opacity: 1; }
+
+.valueIcon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.2rem;
+}
+
+.valueTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.valueDesc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.87rem;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ── STORY SECTION ───────────────────────────────────────── */
+.storySection {
+  padding: 7rem 4rem;
+  background: rgba(124, 58, 237, 0.04);
+  border-top: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.storyInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.storyLottieWrap {
+  position: relative;
+}
+
+.storyLottie {
+  width: 100%;
+  height: 380px;
+}
+
+.storyStatRow {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.storyStat {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 14px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+
+.storyStatValue {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: #b8ff5b;
+  line-height: 1;
+  display: block;
+}
+
+.storyStatLabel {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.22);
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.storyContent {}
+
+.storyTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 0.93;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.01em;
+}
+
+.storyTitleEm { color: #b8ff5b; }
+
+.storyBody {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.97rem;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 1.2rem;
+}
+
+.storyQuote {
+  border-left: 2px solid #b8ff5b;
+  padding-left: 1.2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  line-height: 1.7;
+  margin: 1.5rem 0;
+}
+
+/* ── CTA BAND ────────────────────────────────────────────── */
+.ctaBand {
+  padding: 6rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(139, 92, 246, 0.12);
+  background: #07000e;
+}
+
+.ctaBand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.14) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.ctaTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.9;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaTitleAccent { color: #b8ff5b; }
+
+.ctaSub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.38);
+  max-width: 420px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaActions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+
+.ctaBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #b8ff5b;
+  color: #07000e;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1rem 2.2rem;
+  border: 2px solid #b8ff5b;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ctaBtnPrimary:hover {
+  background: transparent;
+  color: #b8ff5b;
+}
+
+.ctaBtnGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #ffffff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1rem 2.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ctaBtnGhost:hover {
+  border-color: #a78bfa;
+  color: #a78bfa;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid rgba(139, 92, 246, 0.12);
+  padding: 2.5rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #07000e;
+}
+
+.footerLogo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  color: #a78bfa;
+}
+
+.footerLinks { display: flex; gap: 1.5rem; }
+
+.footerLink {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLink:hover { color: #a78bfa; }
+
+.footerCopy {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* ── ANIMATION ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nav { padding: 1rem 2rem; }
+  .aboutHero { padding: 4rem 2rem; gap: 2rem; }
+  .missionLeft, .missionRight { padding: 3rem 2rem; }
+  .valuesSection, .storySection, .ctaBand { padding: 5rem 2rem; }
+  .footer { padding: 2rem; }
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 1rem 1.25rem; }
+  .aboutHero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .heroRight { display: none; }
+  .missionSection { grid-template-columns: 1fr; }
+  .missionLeft {
+    border-right: none;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.12);
+    padding: 3rem 1.5rem;
+  }
+  .missionRight { padding: 3rem 1.5rem; }
+  .valuesGrid { grid-template-columns: 1fr; }
+  .storyInner { grid-template-columns: 1fr; gap: 2rem; }
+  .storyLottie { height: 260px; }
+  .valuesSection, .storySection, .ctaBand { padding: 4rem 1.5rem; }
+  .footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+}
