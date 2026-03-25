@@ -80,7 +80,7 @@ export default function SignupPage() {
       </nav>
 
       {/* ── Left panel — signup card ── */}
-      <div className="flex flex-1 items-center justify-center px-6 pt-28 pb-12 lg:max-w-[520px] lg:border-r lg:border-zinc-800/60">
+      <div className="flex flex-1 items-center justify-center px-6 pt-28 pb-12 lg:max-w-130 lg:border-r lg:border-zinc-800/60">
         <div className="relative w-full max-w-md">
           {/* Corner brackets */}
           <div className="absolute -left-2 -top-2 h-5 w-5 border-l-2 border-t-2 border-[#8b5cf6]" />
