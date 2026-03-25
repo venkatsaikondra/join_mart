@@ -36,6 +36,12 @@ interface Product {
   createdAt: string;
 }
 
+interface Image {
+  id: string;
+  data: string; // base64 data URL
+  createdAt: string;
+}
+
 export const db = {
   rooms: {
     create: async (data: Omit<Room, 'createdAt'>) => {
@@ -51,6 +57,10 @@ export const db = {
     findById: async (id: string) => {
       const dbConn = await connectToDatabase();
       return await dbConn.collection('rooms').findOne({ id });
+    },
+    findAll: async () => {
+      const dbConn = await connectToDatabase();
+      return await dbConn.collection('rooms').find({}).sort({ createdAt: -1 }).toArray();
     },
   },
   products: {
@@ -81,6 +91,17 @@ export const db = {
         return await dbConn.collection('products').findOne({ id });
       }
       return null;
+    },
+  },
+  images: {
+    create: async (data: Image) => {
+      const dbConn = await connectToDatabase();
+      const result = await dbConn.collection('images').insertOne(data);
+      return { ...data, _id: result.insertedId };
+    },
+    findById: async (id: string) => {
+      const dbConn = await connectToDatabase();
+      return await dbConn.collection('images').findOne({ id });
     },
   },
 };

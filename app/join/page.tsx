@@ -1,9 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import RoomCard from '@/components/RoomCard';
 import styles from './page.module.css';
+
+interface Room {
+  id: string;
+  code: string;
+  name: string;
+  description?: string;
+  createdBy: string;
+  createdAt: string;
+  productCount?: { available: number; held: number; sold: number };
+}
 
 export default function JoinPage() {
   const router = useRouter();
@@ -11,6 +22,25 @@ export default function JoinPage() {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [loadingRooms, setLoadingRooms] = useState(true);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const res = await fetch('/api/rooms');
+        if (res.ok) {
+          const data = await res.json();
+          setRooms(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch rooms:', err);
+      } finally {
+        setLoadingRooms(false);
+      }
+    };
+    fetchRooms();
+  }, []);
 
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +113,30 @@ export default function JoinPage() {
             {loading ? 'Joining…' : '⌗ Enter Room'}
           </button>
         </form>
+      </div>
+
+      {/* Available Rooms Section */}
+      <div className={styles.roomsSection}>
+        <h2 className={styles.roomsTitle}>Available Rooms</h2>
+        {loadingRooms ? (
+          <p className={styles.loadingText}>Loading rooms...</p>
+        ) : rooms.length > 0 ? (
+          <div className={styles.roomsList}>
+            {rooms.map((room) => (
+              <RoomCard
+                key={room.code}
+                id={room.id}
+                code={room.code}
+                name={room.name}
+                description={room.description}
+                productCount={room.productCount}
+                createdAt={room.createdAt}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className={styles.noRoomsText}>No rooms available yet. Create one to get started!</p>
+        )}
       </div>
     </main>
   );

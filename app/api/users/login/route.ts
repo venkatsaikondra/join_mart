@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     // Normalize email to lowercase to match signup logic
     const lowEmail = email.toLowerCase();
 
-    const user = await User.findOne({ email: lowEmail });
+    const user = await User.findOne({ email: lowEmail }).select('+password');
     if (!user) {
       // Returns specific message for frontend toast
       return NextResponse.json({ error: "User does not exist" }, { status: 400 });

@@ -27,16 +27,27 @@ export default function RoomPage() {
     name: '', description: '', price: '', currency: '₹',
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // fetch room + products from API
-    fetch(`/api/room/${roomId}`)
-      .then(r => r.ok ? r.json() : Promise.reject())
-      .then(d => { 
-        setRoomName(d.name); 
-        setProducts(d.products); 
-      })
-      .catch(() => {});
+    // Fetch room + products from API
+    const fetchRoom = async () => {
+      try {
+        const r = await fetch(`/api/room/${roomId}`);
+        if (!r.ok) throw new Error('Room not found');
+        const d = await r.json();
+        setRoomName(d.name);
+        setProducts(d.products || []);
+      } catch (err) {
+        console.error('Failed to load room:', err);
+      }
+    };
+
+    fetchRoom();
+
+    // Poll for updates so joined users see changes in near real-time
+    const interval = setInterval(fetchRoom, 4000);
+    return () => clearInterval(interval);
   }, [roomId]);
 
   const copyCode = () => {
@@ -47,24 +58,65 @@ export default function RoomPage() {
 
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
-    let imageUrl = '';
-    if (imageFile) {
-      imageUrl = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.readAsDataURL(imageFile);
-      });
+    
+    if (!form.name || !form.price) {
+      alert('Product name and price are required');
+      return;
     }
-    const res = await fetch('/api/product/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ roomId, ...form, price: Number(form.price), imageUrl }),
-    });
-    const newProduct = await res.json();
-    setProducts(prev => [newProduct, ...prev]);
-    setShowModal(false);
-    setForm({ name: '', description: '', price: '', currency: '₹' });
-    setImageFile(null);
+
+    setLoading(true);
+    try {
+      let imageUrl = '';
+      
+      if (imageFile) {
+        // Convert image to base64
+        const imageData = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(new Error('Failed to read file'));
+          reader.readAsDataURL(imageFile);
+        });
+        imageUrl = imageData;
+      }
+
+      const res = await fetch('/api/product/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          roomId,
+          name: form.name,
+          description: form.description,
+          price: Number(form.price),
+          imageUrl,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to add product');
+      }
+
+      const newProduct = await res.json();
+      setProducts(prev => [newProduct, ...prev]);
+      setShowModal(false);
+      setForm({ name: '', description: '', price: '', currency: '₹' });
+      setImageFile(null);
+    } catch (error) {
+      console.error('Error adding product:', error);
+      alert('Failed to add product. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshRoom = async () => {
+    try {
+      const r = await fetch(`/api/room/${roomId}`);
+      if (!r.ok) return;
+      const d = await r.json();
+      setProducts(d.products || []);
+    } catch (err) {
+      console.error('Failed to refresh room:', err);
+    }
   };
 
   const handleHold = async (productId: string) => {
@@ -76,6 +128,7 @@ export default function RoomPage() {
     setProducts(prev =>
       prev.map(p => p.id === productId ? { ...p, status: 'held', heldBy: 'You' } : p)
     );
+    await refreshRoom();
   };
 
   const handleSell = async (productId: string) => {
@@ -87,6 +140,7 @@ export default function RoomPage() {
     setProducts(prev =>
       prev.map(p => p.id === productId ? { ...p, status: 'sold' } : p)
     );
+    await refreshRoom();
   };
 
   const counts = {
@@ -233,8 +287,8 @@ export default function RoomPage() {
                 />
               </div>
 
-              <button className={styles.submitBtn} type="submit">
-                ✦ List Product
+              <button className={styles.submitBtn} type="submit" disabled={loading}>
+                {loading ? 'Adding...' : '✦ List Product'}
               </button>
             </form>
           </div>
