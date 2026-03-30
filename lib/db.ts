@@ -1,18 +1,25 @@
 // lib/db.ts
 import { MongoClient, Db } from 'mongodb';
 
-const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
-if (!uri) {
-  throw new Error(
-    'Missing database connection string. Set MONGO_URI or MONGODB_URI in your environment.'
-  );
+let client: MongoClient | null = null;
+let databaseConnection: Db | null = null;
+
+function getMongoUri() {
+  return process.env.MONGO_URI || process.env.MONGODB_URI;
 }
 
-const client = new MongoClient(uri);
-let databaseConnection: Db;
-
 export async function connectToDatabase() {
+  const uri = getMongoUri();
+  if (!uri) {
+    throw new Error(
+      'Missing database connection string. Set MONGO_URI or MONGODB_URI in your environment.'
+    );
+  }
+
   if (!databaseConnection) {
+    if (!client) {
+      client = new MongoClient(uri);
+    }
     await client.connect();
     databaseConnection = client.db();
   }

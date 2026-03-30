@@ -39,6 +39,10 @@ export async function POST(req: NextRequest) {
       createdBy: yourName.trim(),
     });
 
+    if (!room) {
+      return NextResponse.json({ error: 'Failed to create room' }, { status: 500 });
+    }
+
     return NextResponse.json({ 
       success: true, 
       code: room.code, 
