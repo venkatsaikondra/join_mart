@@ -1,9 +1,14 @@
 // lib/db.ts
 import { MongoClient, Db } from 'mongodb';
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/join_mart';
-const client = new MongoClient(uri);
+const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
+if (!uri) {
+  throw new Error(
+    'Missing database connection string. Set MONGO_URI or MONGODB_URI in your environment.'
+  );
+}
 
+const client = new MongoClient(uri);
 let databaseConnection: Db;
 
 export async function connectToDatabase() {
