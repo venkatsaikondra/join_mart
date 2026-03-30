@@ -30,6 +30,8 @@ export default function RoomPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!roomCode) return;
+
     // Fetch room + products from API
     const fetchRoom = async () => {
       try {

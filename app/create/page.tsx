@@ -23,10 +23,14 @@ export default function CreatePage() {
         body: JSON.stringify({ ...form, role }),
       });
       const data = await res.json();
+      if (!res.ok || !data?.code) {
+        throw new Error(data?.error || 'Failed to create room');
+      }
       setRoomCode(data.code);
       setStep('success');
-    } catch {
-      alert('Something went wrong. Please try again.');
+    } catch (error) {
+      console.error('Room creation failed:', error);
+      alert(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
