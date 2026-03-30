@@ -10,12 +10,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
-  const room = await db.rooms.findById(roomId);
+  const room = await db.rooms.findByCode(roomId);
   if (!room) return NextResponse.json({ error: 'Room not found' }, { status: 404 });
 
   const product = await db.products.create({
     id: randomUUID(),
-    roomId,
+    roomId: room.id,
     name,
     description: description ?? '',
     price: Number(price),

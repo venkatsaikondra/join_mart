@@ -16,7 +16,7 @@ interface Product {
 }
 
 export default function RoomPage() {
-  const { roomId } = useParams<{ roomId: string }>();
+  const { roomId: roomCode } = useParams<{ roomId: string }>();
   const [products, setProducts] = useState<Product[]>([]);
   const [roomName, setRoomName] = useState('Room');
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +33,7 @@ export default function RoomPage() {
     // Fetch room + products from API
     const fetchRoom = async () => {
       try {
-        const r = await fetch(`/api/room/${roomId}`);
+        const r = await fetch(`/api/room/${roomCode}`);
         if (!r.ok) throw new Error('Room not found');
         const d = await r.json();
         setRoomName(d.name);
@@ -48,10 +48,10 @@ export default function RoomPage() {
     // Poll for updates so joined users see changes in near real-time
     const interval = setInterval(fetchRoom, 4000);
     return () => clearInterval(interval);
-  }, [roomId]);
+  }, [roomCode]);
 
   const copyCode = () => {
-    navigator.clipboard.writeText(roomId);
+    navigator.clipboard.writeText(roomCode);
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
@@ -83,7 +83,7 @@ export default function RoomPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          roomId,
+          roomId: roomCode,
           name: form.name,
           description: form.description,
           price: Number(form.price),
@@ -110,7 +110,7 @@ export default function RoomPage() {
 
   const refreshRoom = async () => {
     try {
-      const r = await fetch(`/api/room/${roomId}`);
+      const r = await fetch(`/api/room/${roomCode}`);
       if (!r.ok) return;
       const d = await r.json();
       setProducts(d.products || []);
@@ -163,7 +163,7 @@ export default function RoomPage() {
 
         <div className={styles.navRight}>
           <button className={styles.codePill} onClick={copyCode} title="Copy code">
-            <span className={styles.codeValue}>{roomId}</span>
+            <span className={styles.codeValue}>{roomCode}</span>
             <span className={styles.copyIcon}>{copied ? '✓' : '⎘'}</span>
           </button>
           {isVendor && (

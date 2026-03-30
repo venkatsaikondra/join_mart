@@ -1,58 +1,102 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Syne:wght@400;500;600;700&display=swap');
 
 .card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(139, 92, 246, 0.15);
-  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
   overflow: hidden;
   font-family: 'Syne', sans-serif;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   animation: cardIn 0.4s ease both;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes cardIn {
-  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  from { opacity: 0; transform: scale(0.98) translateY(12px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .card:hover {
   transform: translateY(-4px);
-  border-color: rgba(139, 92, 246, 0.35);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(109, 40, 217, 0.1);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3), 0 0 24px rgba(124, 58, 237, 0.12);
 }
 
-/* Status-specific border glow */
+.card.available {
+  border-color: rgba(34, 197, 94, 0.18);
+}
+
 .card.held {
-  border-color: rgba(250, 204, 21, 0.3);
-}
-
-.card.held:hover {
-  border-color: rgba(250, 204, 21, 0.5);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(250, 204, 21, 0.08);
+  border-color: rgba(234, 179, 8, 0.2);
 }
 
 .card.sold {
+  opacity: 0.9;
   border-color: rgba(248, 113, 113, 0.2);
-  opacity: 0.7;
 }
 
-/* Image */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 0.5rem;
+  gap: 0.75rem;
+}
+
+.userBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.24);
+}
+
+.vendorName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f8fbff;
+  margin: 0;
+}
+
+.vendorMeta {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0.1rem 0 0;
+}
+
+.options {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 1.2rem;
+}
+
 .imageWrap {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: rgba(139, 92, 246, 0.06);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.45s ease;
 }
 
-.card:hover .image { transform: scale(1.04); }
+.card:hover .image {
+  transform: scale(1.04);
+}
 
 .imageFallback {
   width: 100%;
@@ -60,183 +104,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 92, 246, 0.05));
-  color: rgba(167, 139, 250, 0.4);
-}
-
-/* Status badge */
-.badge {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: 100px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
-  font-family: 'Syne', sans-serif;
-}
-
-.badge.available {
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.4);
-  color: #86efac;
-}
-
-.badge.held {
-  background: rgba(250, 204, 21, 0.15);
-  border: 1px solid rgba(250, 204, 21, 0.4);
-  color: #fde047;
-}
-
-.badge.sold {
-  background: rgba(248, 113, 113, 0.15);
-  border: 1px solid rgba(248, 113, 113, 0.4);
-  color: #fca5a5;
-}
-
-.badgeDot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-}
-
-.badge.available .badgeDot { background: #4ade80; box-shadow: 0 0 5px #4ade80; }
-.badge.held .badgeDot { background: #facc15; box-shadow: 0 0 5px #facc15; animation: blink 1.5s ease-in-out infinite; }
-.badge.sold .badgeDot { background: #f87171; }
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
-/* Body */
-.body {
-  padding: 1.1rem 1.2rem 1.2rem;
-}
-
-.name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 0.3rem;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.description {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.35);
-  margin: 0 0 1rem;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: #a78bfa;
-  line-height: 1;
-}
-
-.heldBy {
-  font-size: 0.7rem;
-  color: rgba(253, 224, 71, 0.6);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-}
-
-/* Buttons */
-.actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.btnHold {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 0.55rem 0.75rem;
-  border-radius: 9px;
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  background: rgba(124, 58, 237, 0.1);
-  color: #c4b5fd;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.03em;
-}
-
-.btnHold:hover {
-  background: rgba(124, 58, 237, 0.2);
-  border-color: rgba(139, 92, 246, 0.6);
-  transform: translateY(-1px);
-}
-
-.btnHold:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btnSell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  padding: 0.55rem 0.85rem;
-  border-radius: 9px;
-  border: none;
-  background: linear-gradient(135deg, #7c3aed, #9333ea);
-  color: #fff;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.03em;
-  box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
-}
-
-.btnSell:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
-}
-
-.btnSell:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  transform: none;
+  font-size: 3rem;
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.14), rgba(99, 102, 241, 0.05));
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .soldOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(6, 0, 15, 0.5);
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,12 +121,159 @@
 
 .soldStamp {
   border: 2px solid rgba(248, 113, 113, 0.5);
-  color: rgba(248, 113, 113, 0.7);
+  color: rgba(248, 113, 113, 0.85);
   font-family: 'Syne', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 0.2em;
-  padding: 0.4rem 1.2rem;
-  border-radius: 6px;
-  transform: rotate(-12deg);
+  padding: 0.4rem 1.15rem;
+  border-radius: 8px;
+  transform: rotate(-10deg);
+}
+
+.body {
+  padding: 1rem 1rem 1.25rem;
+}
+
+.caption {
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.45rem;
+  line-height: 1.15;
+}
+
+.description {
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e9d5ff;
+}
+
+.statusTag {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.statusTag.available {
+  background: rgba(34, 197, 94, 0.18);
+  color: #bbf7d0;
+}
+
+.statusTag.held {
+  background: rgba(234, 179, 8, 0.18);
+  color: #fde68a;
+}
+
+.statusTag.sold {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fecaca;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.holdInfo {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.btnHold,
+.btnSell {
+  min-width: 100px;
+}
+
+.btnHold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(196, 181, 253, 0.35);
+  background: rgba(124, 58, 237, 0.14);
+  color: #ede9fe;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btnHold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+}
+
+.btnHold:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnSell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.28);
+}
+
+.btnSell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.45);
+}
+
+.btnSell:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
 }

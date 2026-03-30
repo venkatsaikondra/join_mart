@@ -18,31 +18,33 @@ interface Props {
 }
 
 const STATUS_LABELS = {
-  available: '🟢 Available',
-  held: '🟡 Held',
-  sold: '🔴 Sold',
+  available: 'Available',
+  held: 'Held',
+  sold: 'Sold',
 };
 
 export default function ProductCard({ product, isVendor, onHold, onSell }: Props) {
   const { name, description, price, imageUrl, status, heldBy } = product;
 
   return (
-    <div className={`${styles.card} ${styles[status]}`}>
-      {/* Image */}
+    <article className={`${styles.card} ${styles[status]}`}>
+      <header className={styles.cardHeader}>
+        <div className={styles.userBadge}>
+          <span className={styles.avatar}>V</span>
+          <div>
+            <p className={styles.vendorName}>Vendor</p>
+            <p className={styles.vendorMeta}>Shared in this room</p>
+          </div>
+        </div>
+        <span className={styles.options}>⋯</span>
+      </header>
+
       <div className={styles.imageWrap}>
         {imageUrl ? (
           <img src={imageUrl} alt={name} className={styles.image} />
         ) : (
           <div className={styles.imageFallback}>🛍</div>
         )}
-
-        {/* Status badge */}
-        <div className={`${styles.badge} ${styles[status]}`}>
-          <span className={styles.badgeDot} />
-          {status === 'available' ? 'Available' : status === 'held' ? 'Held' : 'Sold'}
-        </div>
-
-        {/* Sold overlay stamp */}
         {status === 'sold' && (
           <div className={styles.soldOverlay}>
             <span className={styles.soldStamp}>SOLD</span>
@@ -50,21 +52,25 @@ export default function ProductCard({ product, isVendor, onHold, onSell }: Props
         )}
       </div>
 
-      {/* Body */}
       <div className={styles.body}>
-        <h3 className={styles.name}>{name}</h3>
-        {description && <p className={styles.description}>{description}</p>}
+        <div className={styles.caption}>
+          <h3 className={styles.name}>{name}</h3>
+          {description && <p className={styles.description}>{description}</p>}
+        </div>
+
+        <div className={styles.metaRow}>
+          <span className={styles.price}>₹{price ? price.toLocaleString('en-IN') : 'N/A'}</span>
+          <span className={`${styles.statusTag} ${styles[status]}`}>
+            {STATUS_LABELS[status]}
+          </span>
+        </div>
 
         <div className={styles.footer}>
-          <div>
-            <span className={styles.price}>₹{price ? price.toLocaleString('en-IN') : 'N/A'}</span>
-            {status === 'held' && heldBy && (
-              <p className={styles.heldBy}>Held by {heldBy}</p>
-            )}
+          <div className={styles.holdInfo}>
+            {status === 'held' && heldBy ? `Held by ${heldBy}` : 'Tap for details'}
           </div>
 
           <div className={styles.actions}>
-            {/* Buyer: Hold button */}
             {!isVendor && (
               <button
                 className={styles.btnHold}
@@ -75,8 +81,6 @@ export default function ProductCard({ product, isVendor, onHold, onSell }: Props
                 🤚 Hold
               </button>
             )}
-
-            {/* Vendor: Mark Sold button */}
             {isVendor && (
               <button
                 className={styles.btnSell}
@@ -90,6 +94,6 @@ export default function ProductCard({ product, isVendor, onHold, onSell }: Props
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
